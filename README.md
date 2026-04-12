@@ -20,14 +20,7 @@ Replace this paragraph with your own summary of what your version does.
 Explain your design in plain language.
 
 Some prompts to answer:
-
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
-
-You can include a simple diagram or bullet list if helpful.
+Real-world recommendations work by combining behavior (user clicks, skips, likes; both implicit and explicit signals), content data (song's information such as mood and tempo), and context data (when user listens to songs, current events/trends) with machine learning algorithms. This helps give optimal recommendations. In my system, the Recommender uses each Song's mood, energy, and danceability to compute a score for each song. My UserProfile stores the user's preferred mood, energy, and danceability value for ideal songs. The Recommender computes a score for each song through the following math formula: score = (0.5 * mood_score) + (0.3 * energy_score) + (0.2 * danceability_score), where mood_score = 0 or 1 (match or not), energy_score = 1 - (song_energy - target_energy), and danceability_score = 1- (song_danceability - target_danceability). This system prioritizes mood, then energy, then danceability, and this is how the recommender works.
 
 ---
 
