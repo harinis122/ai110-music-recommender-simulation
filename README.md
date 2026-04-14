@@ -11,8 +11,6 @@ Your goal is to:
 - Evaluate what your system gets right and wrong
 - Reflect on how this mirrors real world AI recommenders
 
-Replace this paragraph with your own summary of what your version does.
-
 ---
 
 ## How The System Works
@@ -62,9 +60,6 @@ Deep Intense Rock Profile:
 
 
 
-
-
-
 ## Getting Started
 
 ### Setup
@@ -101,26 +96,12 @@ You can add more tests in `tests/test_recommender.py`.
 ---
 
 ## Experiments You Tried
-
-Use this section to document the experiments you ran. For example:
-
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+I tested my recommender on four different user profiles: happy/pop, lofi/chill, edge case (prefer high energy but sad genre), and heavy rock. For each of these cases, I looked at the songs recommended and their corresponding genres, moods, and energy levels, and for all cases, the recommendations seemed accurate and reasonable. None of the recommendations surprised me too much.
 
 ---
 
 ## Limitations and Risks
-
-Summarize some limitations of your recommender.
-
-Examples:
-
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-
-You will go deeper on this in your model card.
+One weakness I discovered during my experiments is that my system favors labels over actual music. Since genre and mood account for about 70% of a song's score, and both of these are just labels of a song rather than the song's actual music, my system favors easily classifiable songs.
 
 ---
 
@@ -146,67 +127,34 @@ Combines reflection and model card framing from the Module 3 guidance. :contentR
 # 🎧 Model Card - Music Recommender Simulation
 
 ## 1. Model Name
-
-Give your recommender a name, for example:
-
-> VibeFinder 1.0
+MusicMind 1.0
 
 ---
 
 ## 2. Intended Use
-
-- What is this system trying to do
-- Who is it for
-
-Example:
-
-> This model suggests 3 to 5 songs from a small catalog based on a user's preferred genre, mood, and energy level. It is for classroom exploration only, not for real users.
+This music recommender is meant for users to find more songs that fit their music taste. It assumes that the user has a good idea of what music they like and is not meant to be used to figure out new kinds of music interests. This can be used by real users.
 
 ---
 
 ## 3. How It Works (Short Explanation)
-
-Describe your scoring logic in plain language.
-
-- What features of each song does it consider
-- What information about the user does it use
-- How does it turn those into a number
-
-Try to avoid code in this section, treat it like an explanation to a non programmer.
+My scoring approach takes into consideration the user's preferred music mood, genre, energy, and danceability, filtering by valence first. The model turns those into a score using a weighted average, considering mood and genre the most. This means that genre and mood compatability is considerd more than energy compatability. I changed the number of components considered from the starter logic to make this score calculation more accurate and less biased.
 
 ---
 
 ## 4. Data
+The model uses a dataset of 22 songs, most of which are English-language songs. A variety of genres are represented here, ranging from pop to lofi to rock. I added 12 more songs than originally provided so that the model has a larger set of songs to recommend, allowing more personalized recommendations by music taste. I think that, for the most part, this dataset is good at representing a variety of different music tastes.
 
-Describe your dataset.
-
-- How many songs are in `data/songs.csv`
-- Did you add or remove any songs
-- What kinds of genres or moods are represented
-- Whose taste does this data mostly reflect
 
 ---
 
 ## 5. Strengths
+My system works well for a wide range of music preferences. For all cases I tested my system on, the recommendations seemed reasonable. This is because my system heavily considers genre and mood, making sure that the vibe of each recommended song mirrors user preferences.
 
-Where does your recommender work well
-
-You can think about:
-- Situations where the top results "felt right"
-- Particular user profiles it served well
-- Simplicity or transparency benefits
 
 ---
 
 ## 6. Limitations and Bias
-
-Where does your recommender struggle
-
-Some prompts:
-- Does it ignore some genres or moods
-- Does it treat all users as if they have the same taste shape
-- Is it biased toward high energy or one genre by default
-- How could this be unfair if used in a real product
+One weakness I discovered during my experiments is that my system favors labels over actual music. Since genre and mood account for about 70% of a song's score, and both of these are just labels of a song rather than the song's actual music, my system favors easily classifiable songs. For example, songs that can easily be classified as "happy" mood and "pop" genre are more likely to appear correctly versus songs that fit under multiple moods and genres are less likely to be recommended. My system also struggles to output a diverse set of song recommendations, and does not allow room for the user to listen to new kinds of songs.
 
 ---
 
@@ -215,31 +163,16 @@ Some prompts:
 How did you check your system
 
 Examples:
-- You tried multiple user profiles and wrote down whether the results matched your expectations
-- You compared your simulation to what a real app like Spotify or YouTube tends to recommend
-- You wrote tests for your scoring logic
-
-You do not need a numeric metric, but if you used one, explain what it measures.
-
+I tested my recommender on four different user profiles: happy/pop, lofi/chill, edge case (prefer high energy but sad genre), and heavy rock. For each of these cases, I looked at the songs recommended and their corresponding genres, moods, and energy levels, and for all cases, the recommendations seemed accurate and reasonable. None of the recommendations surprised me too much.
+Since many of the songs in my dataset are easily classifiable, the recommendations did not really change too much even after I eliminated the genre feature from scoring. However, I did notice that once I removed the genre feature, some songs that sort of sound like a particular genre, such as Takedown sounding like pop but being classified under rock, showed up under happy/pop. Removing genre gave more preference to actual musical content rather than labels, which can be good or bad depending on perspective.
 ---
 
 ## 8. Future Work
+To improve the model, I would try and group together similar genres and moods to diversify the music recommendations. Currently, the model looks for exact matches in mood/genre but I think it would be better if the model also recommended similar mood/genre songs so that the user could explore more songs and figure out other kinds of songs they like, to get familiar with more songs.
 
-If you had more time, how would you improve this recommender
-
-Examples:
-
-- Add support for multiple users and "group vibe" recommendations
-- Balance diversity of songs instead of always picking the closest match
-- Use more features, like tempo ranges or lyric themes
 
 ---
 
 ## 9. Personal Reflection
-
-A few sentences about what you learned:
-
-- What surprised you about how your system behaved
-- How did building this change how you think about real music recommenders
-- Where do you think human judgment still matters, even if the model seems "smart"
+I learned that recommender systems are much more complex than I previously imagined. They not only consider explicit user behavior but they also consider implicit user behavior such as time spent on certain songs. I discovered that, to be the most accurate, recommender systems must consider a variety of components when giving recommendations. I also learned that there must be weighting when giving a score to a particular candidate, and that it is important to prioritize the right components when scoring. This project made me realize that each recommendation system is biased in its own way (which is not a bad thing), and that one must clearly define what they want the recommendation system to prioritize beforehand. AI was especially helpful in this process to write out all the code, so that I could focus on the overall system design.
 

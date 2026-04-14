@@ -1,61 +1,27 @@
 # 🎧 Model Card: Music Recommender Simulation
 
 ## 1. Model Name  
-
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
+MusicMind 1.0
 
 ---
 
 ## 2. Intended Use  
-
-Describe what your recommender is designed to do and who it is for. 
-
-Prompts:  
-
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
+This music recommender is meant for users to find more songs that fit their music taste. It assumes that the user has a good idea of what music they like and is not meant to be used to figure out new kinds of music interests. This can be used by real users. 
 
 ---
 
 ## 3. How the Model Works  
-
-Explain your scoring approach in simple language.  
-
-Prompts:  
-
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+My scoring approach takes into consideration the user's preferred music mood, genre, energy, and danceability, filtering by valence first. The model turns those into a score using a weighted average, considering mood and genre the most. This means that genre and mood compatability is considerd more than energy compatability. I changed the number of components considered from the starter logic to make this score calculation more accurate and less biased.
 
 ---
 
 ## 4. Data  
-
-Describe the dataset the model uses.  
-
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
+The model uses a dataset of 22 songs, most of which are English-language songs. A variety of genres are represented here, ranging from pop to lofi to rock. I added 12 more songs than originally provided so that the model has a larger set of songs to recommend, allowing more personalized recommendations by music taste. I think that, for the most part, this dataset is good at representing a variety of different music tastes.
 
 ---
 
 ## 5. Strengths  
-
-Where does your system seem to work well  
-
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
+My system works well for a wide range of music preferences. For all cases I tested my system on, the recommendations seemed reasonable. This is because my system heavily considers genre and mood, making sure that the vibe of each recommended song mirrors user preferences.
 
 ---
 
@@ -73,23 +39,9 @@ Since many of the songs in my dataset are easily classifiable, the recommendatio
 
 ## 8. Future Work  
 
-Ideas for how you would improve the model next.  
-
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+To improve the model, I would try and group together similar genres and moods to diversify the music recommendations. Currently, the model looks for exact matches in mood/genre but I think it would be better if the model also recommended similar mood/genre songs so that the user could explore more songs and figure out other kinds of songs they like, to get familiar with more songs.
 
 ---
 
 ## 9. Personal Reflection  
-
-A few sentences about your experience.  
-
-Prompts:  
-
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
+I learned that recommender systems are much more complex than I previously imagined. They not only consider explicit user behavior but they also consider implicit user behavior such as time spent on certain songs. I discovered that, to be the most accurate, recommender systems must consider a variety of components when giving recommendations. I also learned that there must be weighting when giving a score to a particular candidate, and that it is important to prioritize the right components when scoring. This project made me realize that each recommendation system is biased in its own way (which is not a bad thing), and that one must clearly define what they want the recommendation system to prioritize beforehand. AI was especially helpful in this process to write out all the code, so that I could focus on the overall system design.
